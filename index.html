@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>徐海麟 - 双语教学作品展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        /* 顶部个人信息头部 */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+            color: white;
+            padding: 50px 20px;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header h1 {
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .job-intention {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            opacity: 0.95;
+        }
+        .profile {
+            font-size: 15px;
+            opacity: 0.85;
+            letter-spacing: 1px;
+        }
+        .divider {
+            width: 60px;
+            height: 3px;
+            background-color: #4a90e2;
+            margin: 16px 0;
+            border-radius: 2px;
+        }
+
+        /* 内容区域 */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto 60px;
+            padding: 0 20px;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #1e3a5f;
+            padding-left: 12px;
+            border-left: 4px solid #2c5282;
+        }
+
+        /* 视频卡片网格 */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 30px;
+        }
+        .video-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(30, 58, 95, 0.12);
+        }
+        .video-cover {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            background-color: #1e293b;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .video-cover::before {
+            content: '';
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.9);
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        .video-cover::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 20px solid #1e3a5f;
+            border-top: 14px solid transparent;
+            border-bottom: 14px solid transparent;
+            margin-left: 6px;
+            z-index: 3;
+        }
+        .video-card:hover .video-cover::before {
+            transform: scale(1.1);
+            background-color: white;
+        }
+        .video-info {
+            padding: 20px 24px;
+        }
+        .video-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 8px;
+        }
+        .video-desc {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* 视频灯箱 */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.92);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        .lightbox.show {
+            display: flex;
+        }
+        .lightbox-content {
+            width: 90%;
+            max-width: 1100px;
+            position: relative;
+            aspect-ratio: 16 / 9;
+        }
+        .lightbox iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.4);
+            border: none;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: white;
+            font-size: 36px;
+            cursor: pointer;
+            line-height: 1;
+            font-weight: 300;
+            transition: opacity 0.2s;
+        }
+        .lightbox-close:hover {
+            opacity: 0.7;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .header {
+                padding: 36px 20px;
+            }
+            .header h1 {
+                font-size: 28px;
+            }
+            .job-intention {
+                font-size: 16px;
+            }
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .video-cover {
+                height: 200px;
+            }
+            .video-info {
+                padding: 16px 18px;
+            }
+            .video-title {
+                font-size: 16px;
+            }
+            .lightbox {
+                padding: 20px;
+            }
+            .lightbox-close {
+                top: -40px;
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部个人信息栏 -->
+    <div class="header">
+        <div class="header-content">
+            <h1>徐海麟</h1>
+            <div class="divider"></div>
+            <p class="job-intention">求职意向：中学数学教师</p>
+            <p class="profile">华中师范大学 · 2027级部属公费师范生 · 数学教育方向</p>
+        </div>
+    </div>
+
+    <!-- 视频内容区 -->
+    <div class="container">
+        <h2 class="section-title">双语教学作品展示</h2>
+        <div class="video-grid">
+            <!-- 汉语版视频卡片 -->
+            <div class="video-card" onclick="openVideo('BV148N765Eor')">
+                <div class="video-cover"></div>
+                <div class="video-info">
+                    <div class="video-title">1.1 集合的概念（汉语授课版）</div>
+                    <div class="video-desc">高中数学必修第一册 · 中文常规教学示范</div>
+                </div>
+            </div>
+
+            <!-- 英语版视频卡片 -->
+            <div class="video-card" onclick="openVideo('BV1KYN76GE3X')">
+                <div class="video-cover"></div>
+                <div class="video-info">
+                    <div class="video-title">1.1 集合的概念（英语授课版）</div>
+                    <div class="video-desc">高中数学必修第一册 · 全英文双语教学示范</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 视频灯箱 -->
+    <div class="lightbox" id="videoLightbox" onclick="closeVideo()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="lightbox-close" onclick="closeVideo()">&times;</span>
+            <iframe id="bilibiliPlayer" src="" scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer">
+        徐海麟 · 双语教学作品展示
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('videoLightbox');
+        const player = document.getElementById('bilibiliPlayer');
+
+        // 打开视频灯箱
+        function openVideo(bvid) {
+            // B站嵌入参数：关闭弹幕、高清画质、宽屏模式
+            player.src = `https://player.bilibili.com/player.html?bvid=${bvid}&page=1&autoplay=0&danmaku=0&as_wide=1&high_quality=1`;
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭视频灯箱
+        function closeVideo() {
+            // 清空播放器，停止播放
+            player.src = '';
+            lightbox.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        // ESC键关闭
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('show')) {
+                closeVideo();
+            }
+        });
+    </script>
+</body>
+</html>
